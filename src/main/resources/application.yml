@@ -1,0 +1,31 @@
+spring:
+  profiles:
+    default: default
+  application:
+    name: auth-server
+  h2:
+    console:
+      enabled: false # true para abrir consola en navegador http://localhost:3030/auth-server/h2-console/login.do
+  config:
+    import: optional:configserver:http://localhost:7777
+  datasource:
+    url: jdbc:h2:mem:users; # poner esto en el login
+    username: sa
+    password: sa
+    driver-class-name: org.h2.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: update
+
+server:
+  port: 3030
+  servlet:
+    context-path: /auth-server
+
+eureka:
+  instance:
+    instance-id: "${spring.application.name}:${random.value}"
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
